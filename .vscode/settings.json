@@ -1,0 +1,31 @@
+{
+    "html.completion.attributeDefaultValue": "doublequotes",
+    "inertia.pages": "resources/js/Pages/**/*.tsx",
+    "inertia.defaultExtension": ".tsx",
+    "eslint.validate": ["javascript", "typescript", "html"],
+    "[javascript,javascriptreact,typescript,typescriptreact,json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "javascript.preferences.quoteStyle": "double",
+        "typescript.preferences.quoteStyle": "double"
+    },
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    "tsimporter.doubleQuotes": true,
+    "editor.formatOnSave": true,
+    "php.executablePath": "D:\\laragon-6.0.0\\bin\\php\\php-8.2.17\\php.exe",
+    "javascript.preferences.quoteStyle": "double",
+    "typescript.preferences.quoteStyle": "double",
+    "typescriptHero.imports.stringQuoteStyle": "\"",
+    "typescriptHero.imports.disableImportRemovalOnOrganize": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
+        "source.addMissingImports.ts": "always",
+        "source.removeUnusedImports": "always",
+        "source.sortImports": "always",
+        "source.fixAll.eslint": "always",
+        "source.fixAll.ts": "always"
+    },
+    "LaravelExtraIntellisense.phpCommand": "D:\\laragon-6.0.0\\bin\\php\\php-8.2.17\\php.exe -r \"{code}\"",
+    "LaravelExtraIntellisense.modelsPaths": ["app", "app/Models", "app/Models/**/*.php"]
+}
