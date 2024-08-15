@@ -21,3 +21,9 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+# custom ignore
+/public/contents/*
+/public/assets/*
+storage/app/contents/
+storage/vite.hot
