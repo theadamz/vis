@@ -11,7 +11,7 @@ import {
 import { ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useState } from "react";
 
 export interface AlertDialogRef {
-    open: (props: AlertDialogProps) => void;
+    open: (props?: AlertDialogProps) => void;
     close: () => void;
 }
 
@@ -31,15 +31,15 @@ const AlertDialog = (props: Props, ref: ForwardedRef<AlertDialogRef>): ReactNode
 
     /*** imperative ***/
     useImperativeHandle(ref, () => ({
-        open: (props: AlertDialogProps) => handleOpen(props),
+        open: (props?: AlertDialogProps) => handleOpen(props),
         close: () => handleClose(),
     }));
 
     /*** events ***/
-    const handleOpen = (props: AlertDialogProps) => {
+    const handleOpen = (props?: AlertDialogProps) => {
         setAlert({
-            title: props.title ?? "Konfirmasi",
-            description: props.description ?? "Apakah anda yakin?",
+            title: props?.title ?? "Confirmation",
+            description: props?.description ?? "Are you sure?",
         });
 
         setOpen(true);
@@ -64,8 +64,8 @@ const AlertDialog = (props: Props, ref: ForwardedRef<AlertDialogRef>): ReactNode
                     <AlertDialogDescription>{alert?.description}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogAction onClick={() => handleSelected(true)}>Ya</AlertDialogAction>
-                    <AlertDialogCancel onClick={() => handleSelected(false)}>Tidak</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleSelected(true)}>Yes</AlertDialogAction>
+                    <AlertDialogCancel onClick={() => handleSelected(false)}>No</AlertDialogCancel>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialogRoot>

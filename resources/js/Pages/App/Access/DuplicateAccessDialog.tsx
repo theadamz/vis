@@ -70,7 +70,7 @@ const DuplicateAccessDialog = ({ roles, onSuccess, onError }: DuplicateAccessDia
                 if (errors.message) {
                     onError(errors.message);
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -81,13 +81,13 @@ const DuplicateAccessDialog = ({ roles, onSuccess, onError }: DuplicateAccessDia
         <Dialog open={openForm}>
             <DialogContent className="sm:max-w-[640px]" aria-describedby="Form">
                 <DialogHeader>
-                    <DialogTitle>Duplikat Akses</DialogTitle>
+                    <DialogTitle>Duplicate Access Role</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <Select
                     className="w-full"
-                    placeholder="Dari Role"
-                    selectLabel="Dari Role"
+                    placeholder="From Role"
+                    selectLabel="From Role"
                     value={data.from_role}
                     onValueChange={(value) => setData("from_role", value)}
                     items={roles.map((role) => {
@@ -97,8 +97,8 @@ const DuplicateAccessDialog = ({ roles, onSuccess, onError }: DuplicateAccessDia
                 />
                 <Select
                     className="w-full"
-                    placeholder="Ke Role"
-                    selectLabel="Ke Role"
+                    placeholder="To Role"
+                    selectLabel="To Role"
                     value={data.to_role}
                     onValueChange={(value) => setData("to_role", value)}
                     items={roles.map((role) => {
@@ -109,11 +109,11 @@ const DuplicateAccessDialog = ({ roles, onSuccess, onError }: DuplicateAccessDia
                 <DialogFooter className="justify-between">
                     <Button type="button" onClick={handleClose}>
                         <Cross2Icon className="mr-2 h-4 w-4" />
-                        Tutup
+                        Close
                     </Button>
                     <Button type="submit" disabled={processing} variant={"outline"} onClick={submitForm}>
                         {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                        Simpan
+                        Save
                     </Button>
                 </DialogFooter>
             </DialogContent>

@@ -3,7 +3,7 @@ import { Button } from "@/Components/shadcn/ui/button";
 import { Checkbox } from "@/Components/shadcn/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/shadcn/ui/dropdown-menu";
 import { PageProps, Role } from "@/types";
-import { fuzzySort } from "@/utils/datatables";
+import { fuzzySort, sortHandler } from "@/utils/datatables";
 import { usePage } from "@inertiajs/react";
 import { DotsHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,7 +11,7 @@ import CaretColumn from "../CaretColumn";
 
 type Permisisons = { [key: string]: boolean };
 
-const columns: ColumnDef<Role, unknown>[] = [
+export const AccessColumns: ColumnDef<Role, unknown>[] = [
     {
         id: "select",
         meta: {
@@ -35,20 +35,20 @@ const columns: ColumnDef<Role, unknown>[] = [
         sortingFn: fuzzySort,
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Nama Akses
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Access Name
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
         },
         meta: {
-            columnDisplayName: "Nama Akses", // Column display name
+            columnDisplayName: "Access Name", // Column display name
         },
     },
     {
         accessorKey: "permissions",
         enableResizing: true,
-        header: "Perizinan",
+        header: "Permissions",
         cell: ({ row }) => {
             const permissions: Permisisons = row.getValue("permissions");
             return (
@@ -64,7 +64,7 @@ const columns: ColumnDef<Role, unknown>[] = [
             );
         },
         meta: {
-            columnDisplayName: "Perizinan", // Column display name
+            columnDisplayName: "Permissions", // Column display name
             columnDisplay: true, // hide column after init
         },
     },
@@ -100,5 +100,3 @@ const columns: ColumnDef<Role, unknown>[] = [
         },
     },
 ];
-
-export default columns;

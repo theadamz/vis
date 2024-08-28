@@ -9,7 +9,7 @@ enum TransactionTypes: string
     public function getName(): string
     {
         return match ($this) {
-            self::INSPECTION => "Inspeksi"
+            self::INSPECTION => "Inspection"
         };
     }
 }

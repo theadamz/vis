@@ -28,7 +28,7 @@ class RoleController extends Controller
         $roleDataTable = $this->datatable();
 
         return Inertia::render('App/Role', [
-            'datatable' => fn () => $roleDataTable
+            'datatable' => fn() => $roleDataTable
         ]);
     }
 
@@ -65,7 +65,7 @@ class RoleController extends Controller
 
         // send link with query string and only send needed data
         $data = $data->paginate($perPage, page: $page)->withQueryString()
-            ->through(fn ($rec) => [
+            ->through(fn($rec) => [
                 'id' => $rec->id,
                 'name' => $rec->name,
                 'def_path' => $rec->def_path
@@ -91,7 +91,7 @@ class RoleController extends Controller
             // check if success
             if (!$model->exists()) {
                 return back()->withErrors([
-                    "message" => "Duplikat data.",
+                    "message" => "Duplicate data.",
                 ]);
             }
 
@@ -99,7 +99,7 @@ class RoleController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_CREATED],
-                'message' => "Data berhasil dibuat.",
+                'message' => "Data successfully created.",
             ]);
 
             Route::inertia('app.role.index', 'App/Role');
@@ -126,7 +126,7 @@ class RoleController extends Controller
         // jika data kosong maka kirim pesan
         if ($data === null) {
             throw new HttpResponseException(response([
-                "message" => "Data tidak ditemukan.",
+                "message" => "Data not found.",
             ], Response::HTTP_NOT_FOUND));
         }
 
@@ -152,7 +152,7 @@ class RoleController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => "Data berhasil diperbaharui.",
+                'message' => "Data successfully saved.",
             ]);
 
             Route::inertia('app.role.index', 'App/Role');
@@ -183,7 +183,7 @@ class RoleController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => count($validated['ids']) . " data berhasil dihapus.",
+                'message' => count($validated['ids']) . " data successfully deleted.",
             ]);
 
             Route::inertia('app.role.index', 'App/Role');

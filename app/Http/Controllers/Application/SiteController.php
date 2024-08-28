@@ -27,7 +27,7 @@ class SiteController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('App/Site/Index', [
-            'datatable' => fn () => $this->datatable()
+            'datatable' => fn() => $this->datatable()
         ]);
     }
 
@@ -70,7 +70,7 @@ class SiteController extends Controller
 
         // send link with query string and only send needed data
         $data = $data->paginate($perPage, page: $page)->withQueryString()
-            ->through(fn ($rec) => [
+            ->through(fn($rec) => [
                 'id' => $rec->id,
                 'code' => $rec->code,
                 'name' => $rec->name,
@@ -96,7 +96,7 @@ class SiteController extends Controller
 
         if ($exist) {
             return back()->withErrors([
-                "code" => ["Kode sudah ada."],
+                "code" => ["Code already used."],
             ]);
         }
 
@@ -110,7 +110,7 @@ class SiteController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_CREATED],
-                'message' => "Data berhasil dibuat.",
+                'message' => "Data successfully created.",
             ]);
 
             Route::inertia('app.site.index', 'App/Site/Index');
@@ -137,7 +137,7 @@ class SiteController extends Controller
         // jika data kosong maka kirim pesan
         if ($data === null) {
             throw new HttpResponseException(response([
-                "message" => "Data tidak ditemukan.",
+                "message" => "Data not found.",
             ], Response::HTTP_NOT_FOUND));
         }
 
@@ -159,7 +159,7 @@ class SiteController extends Controller
 
         if ($exist) {
             return back()->withErrors([
-                "code" => ["Kode sudah ada."],
+                "code" => ["Code already used."],
             ]);
         }
 
@@ -174,7 +174,7 @@ class SiteController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => "Data berhasil diperbaharui.",
+                'message' => "Data successfully saved.",
             ]);
 
             Route::inertia('app.site.index', 'App/Site/Index');
@@ -205,7 +205,7 @@ class SiteController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => count($validated['ids']) . " data berhasil dihapus.",
+                'message' => count($validated['ids']) . " data successfully deleted.",
             ]);
 
             Route::inertia('app.site.index', 'App/Site/Index');

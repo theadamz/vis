@@ -25,3 +25,9 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
     // Provide an alphanumeric fallback for when the item ranks are equal
     return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
+
+export const sortHandler = (direction: boolean | "asc" | "desc"): boolean | undefined => {
+    if (direction === "desc") return undefined;
+    if (direction === false) return false;
+    if (direction === "asc") return true;
+};

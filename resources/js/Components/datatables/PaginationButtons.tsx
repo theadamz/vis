@@ -9,7 +9,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/Components/shadcn/ui/pagination";
-import { Pagination as IPagination } from "@/types/datatables";
+import { IDataTablePagination as IPagination } from "@/types/datatables";
 import { Link } from "@inertiajs/react";
 
 type PaginationButtonsProps<TData> = {

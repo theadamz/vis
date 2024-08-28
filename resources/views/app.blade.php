@@ -11,7 +11,11 @@
     <!-- Scripts -->
     @routes
     @viteReactRefresh
-    @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
+    @if (App::environment('production'))
+        @vite(['resources/js/app.tsx'])
+    @else
+        @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
+    @endif
     @inertiaHead
 </head>
 

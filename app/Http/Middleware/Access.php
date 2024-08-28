@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -18,7 +19,7 @@ class Access
     public function handle(Request $request, Closure $next, string $accessCode = null, bool $checkAuthorization = true): Response
     {
         // check if logged in
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             to_route('sign-in');
         }
 
@@ -31,8 +32,8 @@ class Access
         // get menu data by code
         $menu = app()->general->getMenuByCode($accessCode);
 
-        // if menu not exist or not authorize then send 404
-        abort_if(!app()->general->checkIfMenuExist($accessCode) && $checkAuthorization, Response::HTTP_NOT_FOUND);
+        // if menu is null then 404
+        abort_if(empty($menu) && $checkAuthorization, Response::HTTP_NOT_FOUND);
 
         // set menu
         $access['menu'] = $menu;
@@ -43,7 +44,7 @@ class Access
         // check authorization
         if ($checkAuthorization) {
             // get permissions
-            $permissions = app()->access->getPermissions(auth()->user()->role->id, $accessCode);
+            $permissions = app()->access->getPermissions(Auth::user()->role->id, $accessCode);
 
             // if $permission null then 403
             if (empty($permissions)) {

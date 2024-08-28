@@ -9,7 +9,7 @@ type ToastProps = {
     description: string | ReactNode;
 };
 
-const Toast = ({ variant = "default", title, description }: ToastProps) => {
+const Toast = ({ variant = "default", title = "Warning", description }: ToastProps) => {
     switch (variant) {
         case "warning":
             toast(

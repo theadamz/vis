@@ -73,7 +73,7 @@ const AddAccessDialog = ({ roles, accesses, onSuccess, onError }: AddAccessDialo
                 if (errors.message) {
                     onError(errors.message);
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -98,7 +98,7 @@ const AddAccessDialog = ({ roles, accesses, onSuccess, onError }: AddAccessDialo
         <Dialog open={openForm}>
             <DialogContent className="sm:max-w-[640px]" aria-describedby="Form">
                 <DialogHeader>
-                    <DialogTitle>Tambah Akses</DialogTitle>
+                    <DialogTitle>Add Accesses</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <Select
@@ -113,7 +113,7 @@ const AddAccessDialog = ({ roles, accesses, onSuccess, onError }: AddAccessDialo
                     error={errors.role}
                 />
                 <Command className={`rounded-lg border shadow-md ${errors.access_lists ? "border-red-500" : ""}`}>
-                    <CommandInput placeholder="Cari Akses..." />
+                    <CommandInput placeholder="Find Access..." />
                     <CommandList>
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup>
@@ -132,11 +132,11 @@ const AddAccessDialog = ({ roles, accesses, onSuccess, onError }: AddAccessDialo
                 <DialogFooter className="justify-between">
                     <Button type="button" onClick={handleClose}>
                         <Cross2Icon className="mr-2 h-4 w-4" />
-                        Tutup
+                        Close
                     </Button>
                     <Button type="submit" disabled={processing} variant={"outline"} onClick={submitForm}>
                         {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                        Simpan
+                        Save
                     </Button>
                 </DialogFooter>
             </DialogContent>

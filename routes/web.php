@@ -3,14 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('sign-in');
-})->name('/');
+Route::get('/', fn() => redirect('sign-in'))->name('/');
+Route::get('/login', fn() => redirect('sign-in'))->name('login');
+Route::get('/accesses/menus', [\App\Http\Controllers\Application\AccessController::class, 'getMenu'])->middleware(['auth'])->name('accesses.menu');
+Route::get('/accesses/check', [\App\Http\Controllers\Application\AccessController::class, 'check'])->name('accesses.auth.check');
 
-Route::get('/login', function () {
-    return redirect('sign-in');
-})->name('login');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 // app - Application
 Route::prefix('app')->middleware(['auth'])->group(function () {
@@ -63,16 +65,33 @@ Route::prefix('app')->middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
-    ->middleware(['auth', 'access:dashboard', 'verified'])->name('dashboard');
+// dsh - Dashboard
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth', 'access:dashboard', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// bsc - Basic
+Route::prefix('basic')->middleware(['auth'])->group(function () {
+    // Tipe kendaraan
+    Route::middleware(['can:bsc-vhc-type', 'access:bsc-vhc-type'])->group(function () {
+        Route::get('/vehicle-types', [\App\Http\Controllers\Basic\VehicleTypeController::class, 'index'])->name('bsc.vhc-type.index');
+        Route::post('/vehicle-types', [\App\Http\Controllers\Basic\VehicleTypeController::class, 'store'])->can('bsc-vhc-type-create')->name('bsc.vhc-type.store');
+        Route::get('/vehicle-types/{id}', [\App\Http\Controllers\Basic\VehicleTypeController::class, 'show'])->can('bsc-vhc-type-read')->name('bsc.vhc-type.read');
+        Route::put('/vehicle-types/{id}', [\App\Http\Controllers\Basic\VehicleTypeController::class, 'update'])->can('bsc-vhc-type-edit')->name('bsc.vhc-type.update');
+        Route::delete('/vehicle-types', [\App\Http\Controllers\Basic\VehicleTypeController::class, 'destroy'])->can('bsc-vhc-type-delete')->name('bsc.vhc-type.destroy');
+    });
 });
 
-Route::get('/accesses/menus', [\App\Http\Controllers\Application\AccessController::class, 'getMenu'])->middleware(['auth'])->name('accesses.menu');
-Route::get('/accesses/check', [\App\Http\Controllers\Application\AccessController::class, 'check'])->name('accesses.auth.check');
+// ins - Inspeksi
+Route::prefix('inspections')->middleware(['auth'])->group(function () {
+    // formulir
+    Route::middleware(['can:ins-form', 'access:ins-form'])->group(function () {
+        Route::get('/forms', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'index'])->name('ins.form.index');
+        Route::get('/forms/create', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'create'])->can('ins-form-create')->name('ins.form.create');
+        Route::post('/forms', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'store'])->can('ins-form-create')->name('ins.form.store');
+        Route::get('/forms/{id}', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'show'])->can('ins-form-read')->name('ins.form.read');
+        Route::get('/forms/{id}/edit', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'edit'])->can('ins-form-edit')->name('ins.form.edit');
+        Route::put('/forms/{id}', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'update'])->can('ins-form-edit')->name('ins.form.update');
+        Route::delete('/forms', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'destroy'])->can('ins-form-delete')->name('ins.form.destroy');
+    });
+});
 
 require_once __DIR__ . '/auth.php';

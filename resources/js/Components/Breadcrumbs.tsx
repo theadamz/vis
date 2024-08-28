@@ -19,7 +19,9 @@ const Breadcrumbs = ({ items }: BreadcrumbProps): ReactNode => {
                             <Fragment key={item.label}>
                                 <BreadcrumbItem>
                                     <BreadcrumbLink asChild className="text-xs font-medium leading-none text-gray-400">
-                                        <Link href={item.link}>{item.label}</Link>
+                                        <Link href={item.link} replace preserveState>
+                                            {item.label}
+                                        </Link>
                                     </BreadcrumbLink>
                                 </BreadcrumbItem>
                                 {index < items.length - 1 && items.length > 1 ? <BreadcrumbSeparator /> : null}

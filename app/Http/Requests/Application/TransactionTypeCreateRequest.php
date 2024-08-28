@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Application;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransactionTypeCreateRequest extends FormRequest
@@ -11,7 +12,7 @@ class TransactionTypeCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return Auth::check();
     }
 
     /**

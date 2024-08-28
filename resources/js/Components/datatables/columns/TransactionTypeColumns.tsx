@@ -2,12 +2,13 @@ import { Button } from "@/Components/shadcn/ui/button";
 import { Checkbox } from "@/Components/shadcn/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/shadcn/ui/dropdown-menu";
 import { PageProps, TransactionType } from "@/types";
+import { sortHandler } from "@/utils/datatables";
 import { usePage } from "@inertiajs/react";
 import { DotsHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import CaretColumn from "../CaretColumn";
 
-const columns: ColumnDef<TransactionType, unknown>[] = [
+export const TransactionTypeColumns: ColumnDef<TransactionType, unknown>[] = [
     {
         id: "select",
         meta: {
@@ -28,35 +29,35 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "code",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Kode
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Code
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
         },
         meta: {
-            columnDisplayName: "Kode", // Column display name
+            columnDisplayName: "Code", // Column display name
         },
     },
     {
         accessorKey: "name",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Nama
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Name
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
         },
         meta: {
-            columnDisplayName: "Nama", // Column display name
+            columnDisplayName: "Name", // Column display name
         },
     },
     {
         accessorKey: "prefix",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Prefix
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -70,7 +71,7 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "suffix",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Suffix
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -84,7 +85,7 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "format_seq",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Format No.
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -126,5 +127,3 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         },
     },
 ];
-
-export default columns;

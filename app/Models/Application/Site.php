@@ -2,6 +2,7 @@
 
 namespace App\Models\Application;
 
+use Auth;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,11 +53,11 @@ class Site extends Model
         parent::boot();
 
         static::creating(function (Site $model) {
-            $model->created_by = auth()->id();
+            $model->created_by = Auth::id();
         });
 
         static::updating(function (Site $model) {
-            $model->updated_by = auth()->id();
+            $model->updated_by = Auth::id();
         });
     }
 }

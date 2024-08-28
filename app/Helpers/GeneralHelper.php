@@ -30,68 +30,28 @@ class GeneralHelper
         return DateTimeZone::listIdentifiers(DateTimeZone::ALL);
     }
 
-    public function checkIfMenuExist(string $menuCode): bool
-    {
-        // ambil menu berdasarkan code
-        $menu = collect(config('access.menus'))->firstWhere('code', $menuCode);
-
-        // jika tidak ditemukan maka loop children
-        if (empty($menu)) {
-            // get menu with childrens
-            $childrens = collect(config('access.menus'))->whereNotNull('children')->pluck('children');
-
-            // jika childrens tidak kosong
-            if (!empty($childrens)) {
-                // loop childrens
-                foreach ($childrens as $children) {
-                    // buat map
-                    $menu = collect($children)->firstWhere('code', $menuCode);
-                }
-            }
-        }
-
-        // jika masih tidak ditemukan juga maka false
-        if (empty($menu)) {
-            return false;
-        }
-
-        return $menu['visible'];
-    }
-
     public function getMenuByCode(string $menuCode): ?array
     {
-        $menu = collect(config('access.menus'))->firstWhere('code', $menuCode);
-
-        // jika tidak ditemukan maka loop children
-        if (empty($menu)) {
-            // get menu with childrens
-            $childrens = collect(config('access.menus'))->whereNotNull('children')->pluck('children');
-
-            // jika childrens tidak kosong
-            if (!empty($childrens)) {
-                // loop childrens
-                foreach ($childrens as $children) {
-                    // buat map
-                    $menu = collect($children)->firstWhere('code', $menuCode);
-                }
-            }
-        }
-
-        return $menu;
+        return $this->getMenuFromNestedByCode(collect(config('access.menus'))->toArray(), $menuCode);
     }
 
     public function getMenuFromNestedByCode(array $menuData, string $menuCode): ?array
     {
         // loop $menuData
         foreach ($menuData as $menu) {
-            // jika menu ditemukan maka return datanya
+            // if menu found then return the data
             if ($menu['code'] === $menuCode) {
                 return $menu;
             }
 
-            // jika menu children tidak kosong
+            // if menu children not empty then loop again this function
             if (!empty($menu['children'])) {
-                return $this->getMenuFromNestedByCode($menu['children'], $menuCode);
+                $menu = $this->getMenuFromNestedByCode($menu['children'], $menuCode);
+
+                // if menu empty then return it
+                if (!empty($menu)) {
+                    return $menu;
+                }
             }
         }
 

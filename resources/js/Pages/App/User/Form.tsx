@@ -79,7 +79,7 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
                     if (errors.message) {
                         onError && onError(errors.message);
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -96,7 +96,7 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
                     if (errors.message) {
                         onError && onError(errors.message);
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -128,13 +128,13 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="password" className="text-right">
-                        Kata Sandi
+                        Password
                     </Label>
                     <Input
                         id="password"
                         name="password"
                         type="password"
-                        placeholder="Kata Sandi"
+                        placeholder="Password"
                         className="col-span-3"
                         maxLength={100}
                         required={!isEdit}
@@ -166,13 +166,13 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">
-                        Nama
+                        Name
                     </Label>
                     <Input
                         id="name"
                         name="name"
                         type="text"
-                        placeholder="Nama"
+                        placeholder="Name"
                         className="col-span-3"
                         maxLength={100}
                         required
@@ -207,7 +207,7 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="is_active" className="text-right">
-                        Aktif
+                        Active
                     </Label>
                     <Checkbox
                         id="is_active"
@@ -221,11 +221,11 @@ const Form = ({ roles, sites, edit = false, editData, onSuccess, onCancel, onErr
             <div className="w-full flex justify-between mt-5">
                 <Button type="button" onClick={handleFormClose}>
                     <Cross2Icon className="mr-2 h-4 w-4" />
-                    Tutup
+                    Close
                 </Button>
                 <Button type="submit" disabled={processing} variant={"outline"}>
                     {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                    Simpan
+                    Save
                 </Button>
             </div>
         </form>

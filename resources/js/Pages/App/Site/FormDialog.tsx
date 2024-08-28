@@ -80,7 +80,7 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                     if (errors.message) {
                         onError(errors.message);
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -97,7 +97,7 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                     if (errors.message) {
                         onError(errors.message);
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -109,20 +109,20 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
         <Dialog open={openForm}>
             <DialogContent className="sm:max-w-[640px]" aria-describedby="Form">
                 <DialogHeader>
-                    <DialogTitle>{isEdit ? "Edit Site" : "Buat Site"}</DialogTitle>
+                    <DialogTitle>{isEdit ? "Edit Site" : "Add Site"}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <form onSubmit={submitForm}>
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="code" className="text-right">
-                                Kode
+                                Code
                             </Label>
                             <Input
                                 id="code"
                                 name="code"
                                 type="text"
-                                placeholder="Kode"
+                                placeholder="Code"
                                 className="col-span-3"
                                 maxLength={5}
                                 required
@@ -135,13 +135,13 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="name" className="text-right">
-                                Nama
+                                Name
                             </Label>
                             <Input
                                 id="name"
                                 name="name"
                                 type="text"
-                                placeholder="Nama"
+                                placeholder="Name"
                                 className="col-span-3"
                                 maxLength={100}
                                 required
@@ -154,12 +154,12 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="address" className="text-right">
-                                Alamat
+                                Address
                             </Label>
                             <Textarea
                                 id="address"
                                 name="address"
-                                placeholder="Alamat"
+                                placeholder="Address"
                                 maxLength={255}
                                 className="col-span-3"
                                 onChange={(e) => setData("address", e.target.value)}
@@ -171,7 +171,7 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="is_active" className="text-right">
-                                Aktif
+                                Active
                             </Label>
                             <Checkbox
                                 id="is_active"
@@ -186,11 +186,11 @@ const FormDialog = ({ onError }: FormDialogProps, ref: ForwardedRef<FormDialogRe
                     <DialogFooter className="justify-between">
                         <Button type="button" onClick={handleClose}>
                             <Cross2Icon className="mr-2 h-4 w-4" />
-                            Tutup
+                            Close
                         </Button>
                         <Button type="submit" disabled={processing} variant={"outline"}>
                             {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                            Simpan
+                            Save
                         </Button>
                     </DialogFooter>
                 </form>

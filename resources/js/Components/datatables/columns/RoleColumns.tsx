@@ -2,12 +2,13 @@ import { Button } from "@/Components/shadcn/ui/button";
 import { Checkbox } from "@/Components/shadcn/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/shadcn/ui/dropdown-menu";
 import { PageProps, Role } from "@/types";
+import { sortHandler } from "@/utils/datatables";
 import { usePage } from "@inertiajs/react";
 import { DotsHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import CaretColumn from "../CaretColumn";
 
-const columns: ColumnDef<Role, unknown>[] = [
+export const RoleColumns: ColumnDef<Role, unknown>[] = [
     {
         id: "select",
         meta: {
@@ -28,8 +29,8 @@ const columns: ColumnDef<Role, unknown>[] = [
         accessorKey: "name",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Nama
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Name
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
@@ -39,7 +40,7 @@ const columns: ColumnDef<Role, unknown>[] = [
         accessorKey: "def_path",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Path
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -78,5 +79,3 @@ const columns: ColumnDef<Role, unknown>[] = [
         },
     },
 ];
-
-export default columns;

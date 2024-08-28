@@ -66,15 +66,17 @@ export default function Authenticated({ children }: Readonly<PropsWithChildren>)
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <Link href={route("profile.edit")}>
-                                <DropdownMenuItem>Profil</DropdownMenuItem>
+                                <DropdownMenuItem>Profile</DropdownMenuItem>
                             </Link>
-                            <DropdownMenuItem>Riwayat</DropdownMenuItem>
+                            <Link href={route("profile.edit")}>
+                                <DropdownMenuItem>Change Site</DropdownMenuItem>
+                            </Link>
                             <DropdownMenuSeparator />
                             <Link href={route("sign-out")} method="post" as="button" className="w-full">
-                                <DropdownMenuItem>Keluar</DropdownMenuItem>
+                                <DropdownMenuItem>Sign Out</DropdownMenuItem>
                             </Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -88,11 +90,11 @@ export default function Authenticated({ children }: Readonly<PropsWithChildren>)
             </main>
 
             {/* Footer */}
-            <header className="sticky bottom-0 border-t-1 shadow-md">
+            <section className="sticky bottom-0 border-t-1 shadow-md">
                 <div className="flex w-full bg-white shadow-xl">
                     <div className="px-6 py-1 text-sm text-gray-500">{DateTime.now().setLocale(props.config.locale).toFormat("cccc, d MMMM y")}</div>
                 </div>
-            </header>
+            </section>
         </div>
     );
 }

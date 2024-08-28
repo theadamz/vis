@@ -5,6 +5,7 @@ VIS (Vehicle Information System), web application to inspect incoming vehicle. T
 1. Backend for PWA and SPA.
 2. Web Admin SPA (Use React JS and inertia JS as front end)
 3. Inspection App PWA (Use React JS)
+4. Database diagram [here](https://dbdiagram.io/d/vis-6694a18b9939893daee91844).
 
 ## Requirements
 

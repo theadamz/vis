@@ -2,7 +2,7 @@ import Alert from "@/Components/Alert";
 import AlertDialog, { AlertDialogRef } from "@/Components/AlertDialog";
 import Breadcrumbs from "@/Components/Breadcrumbs";
 import ComboBox from "@/Components/ComboBox";
-import UserColumns from "@/Components/datatables/columns/UserColumns";
+import { UserColumns } from "@/Components/datatables/columns/UserColumns";
 import DataTablePagination, { DataTableRef } from "@/Components/datatables/DataTablePagination";
 import Dialog, { DialogRef } from "@/Components/Dialog";
 import ErrorDialog, { ErrorDialogRef } from "@/Components/ErrorDialog";
@@ -46,7 +46,7 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
     const handleEdit = async (user: UserDataTable) => {
         const response = await axiosCustom({ url: route("app.user.read", { id: user.id }) });
         if (![HttpStatusCode.Ok].includes(response.status)) {
-            Toast({ variant: "warning", title: "Peringatan", description: response.data.message });
+            Toast({ variant: "warning", description: response.data.message });
             return;
         }
 
@@ -60,7 +60,7 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
 
     const handleDelete = (data: Array<UserDataTable>) => {
         // open dialog and set data to state
-        alertDialog.current?.open({ description: `Yakin akan hapus ${data.length} data?` });
+        alertDialog.current?.open({ description: `Are you sure want to delete ${data.length} data?` });
         setCheckedData(data);
     };
 
@@ -86,7 +86,7 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
                 if (errors.message) {
                     errorDialog.current?.show({ message: errors.message });
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -120,17 +120,17 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
 
     return (
         <>
-            <Head title="Pengguna" />
+            <Head title="Users" />
             {/* sub header */}
-            <header className="sticky top-16 z-10 w-full flex py-2 px-6 bg-white shadow justify-between h-14">
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
                 <div className="items-center">
-                    <div className="font-semibold text-md leading-tight text-gray-800">Pengguna</div>
+                    <div className="font-semibold text-md leading-tight text-gray-800">Users</div>
                     <Separator className="my-1" />
-                    <Breadcrumbs items={[{ label: "Aplikasi" }, { label: "Pengguna" }]} />
+                    <Breadcrumbs items={[{ label: "Application" }, { label: "Users" }]} />
                 </div>
                 <Button type="button" variant={"success"} onClick={handleFormOpen}>
                     <PlusIcon className="mr-2 h-4 w-4 stroke-white" />
-                    Buat
+                    Add
                 </Button>
             </header>
 
@@ -148,7 +148,7 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
             <AlertDialog ref={alertDialog} onClose={handleConfirmationDelete} />
 
             {/* form input */}
-            <Dialog ref={formDialog} title={selectedUser !== undefined ? "Edit Pengguna" : "Buat Pengguna"} className="w-full">
+            <Dialog ref={formDialog} title={selectedUser !== undefined ? "Edit User" : "Buat User"} className="w-full">
                 <Form
                     edit={selectedUser !== undefined}
                     editData={selectedUser}
@@ -170,8 +170,8 @@ const Index = ({ datatable, roles, sites }: PageProps<{ datatable: IUserDataTabl
                     <div className="flex space-x-2">
                         <Select
                             className="w-[180px]"
-                            placeholder="Filter Aktif"
-                            selectLabel="Filter Aktif"
+                            placeholder="Filter Active"
+                            selectLabel="Filter Active"
                             value={!queryStrings ? "" : queryStrings["active"] ? (queryStrings["active"] === true ? "true" : "false") : ""}
                             onValueChange={(value) => handleFilters("active", value)}
                             items={[

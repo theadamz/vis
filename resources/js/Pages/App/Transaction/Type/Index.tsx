@@ -1,7 +1,7 @@
 import Alert from "@/Components/Alert";
 import AlertDialog, { AlertDialogRef } from "@/Components/AlertDialog";
 import Breadcrumbs from "@/Components/Breadcrumbs";
-import TransactionTypeColumns from "@/Components/datatables/columns/TransactionTypeColumns";
+import { TransactionTypeColumns } from "@/Components/datatables/columns/TransactionTypeColumns";
 import DataTablePagination, { DataTableRef } from "@/Components/datatables/DataTablePagination";
 import ErrorDialog, { ErrorDialogRef } from "@/Components/ErrorDialog";
 import { Button } from "@/Components/shadcn/ui/button";
@@ -38,7 +38,7 @@ const Index = ({
     const handleEdit = async (type: TransactionType) => {
         const response = await axiosCustom({ url: route("app.transaction.type.read", { id: type.id }) });
         if (![HttpStatusCode.Ok].includes(response.status)) {
-            Toast({ variant: "warning", title: "Peringatan", description: response.data.message });
+            Toast({ variant: "warning", description: response.data.message });
             return;
         }
 
@@ -49,7 +49,7 @@ const Index = ({
 
     const handleDelete = (data: Array<Role>) => {
         // open dialog and set data to state
-        alertDialog.current?.open({ description: `Yakin akan hapus ${data.length} data?` });
+        alertDialog.current?.open({ description: `Are you sure want to delete ${data.length} data?` });
         setCheckedData(data);
     };
 
@@ -75,7 +75,7 @@ const Index = ({
                 if (errors.message) {
                     errorDialog.current?.show({ message: errors.message });
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -92,19 +92,19 @@ const Index = ({
 
     return (
         <>
-            <Head title="Tipe Transaksi" />
+            <Head title="Transaction Types" />
             {/* sub header */}
-            <header className="sticky top-16 z-10 w-full flex py-2 px-6 bg-white shadow justify-between h-14">
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
                 <div className="items-center">
-                    <div className="font-semibold text-md leading-tight text-gray-800">Tipe Transaksi</div>
+                    <div className="font-semibold text-md leading-tight text-gray-800">Transaction Types</div>
                     <Separator className="my-1" />
-                    <Breadcrumbs items={[{ label: "Aplikasi" }, { label: "Transaksi" }, { label: "Tipe" }]} />
+                    <Breadcrumbs items={[{ label: "Application" }, { label: "Transaction" }, { label: "Types" }]} />
                 </div>
                 <div className="flex space-x-2">
                     {props.access.permissions.create && (
                         <Button type="button" variant={"success"} onClick={handleFormOpen}>
                             <PlusIcon className="mr-2 h-4 w-4 stroke-white" />
-                            Buat
+                            Add
                         </Button>
                     )}
                 </div>

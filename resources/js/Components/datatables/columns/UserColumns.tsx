@@ -3,12 +3,14 @@ import { Button } from "@/Components/shadcn/ui/button";
 import { Checkbox } from "@/Components/shadcn/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/shadcn/ui/dropdown-menu";
 import { PageProps, Role } from "@/types";
+import { sortHandler } from "@/utils/datatables";
 import { usePage } from "@inertiajs/react";
 import { DotsHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import { Building2Icon } from "lucide-react";
 import CaretColumn from "../CaretColumn";
 
-const columns: ColumnDef<Role, unknown>[] = [
+export const UserColumns: ColumnDef<Role, unknown>[] = [
     {
         id: "select",
         meta: {
@@ -30,11 +32,14 @@ const columns: ColumnDef<Role, unknown>[] = [
         enableResizing: true,
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Username
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
+        },
+        meta: {
+            columnDisplayName: "Username", // Column display name
         },
     },
     {
@@ -42,11 +47,14 @@ const columns: ColumnDef<Role, unknown>[] = [
         enableResizing: true,
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Nama
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Name
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
+        },
+        meta: {
+            columnDisplayName: "Name", // Column display name
         },
     },
     {
@@ -54,38 +62,48 @@ const columns: ColumnDef<Role, unknown>[] = [
         enableResizing: true,
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Email
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
+        },
+        meta: {
+            columnDisplayName: "Email", // Column display name
         },
     },
     {
         accessorKey: "role_name",
         enableResizing: true,
         header: "Role",
+        meta: {
+            columnDisplayName: "Role", // Column display name
+        },
     },
     {
         accessorKey: "site_name",
         enableResizing: true,
         header: "Site",
+        meta: {
+            columnDisplayName: "Site", // Column display name
+        },
     },
     {
         accessorKey: "is_active",
         enableResizing: true,
         meta: {
             headerClassName: "w-[40px] text-center",
+            columnDisplayName: "Active", // Column display name
         },
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
-                    Aktif
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
+                    Active
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
             );
         },
-        cell: ({ row }) => <Badge variant={row.getValue("is_active") ? "outline" : "warning"}>{row.getValue("is_active") ? "Ya" : "Tidak"}</Badge>,
+        cell: ({ row }) => <Badge variant={row.getValue("is_active") ? "outline" : "warning"}>{row.getValue("is_active") ? "Yes" : "No"}</Badge>,
     },
     {
         id: "actions",
@@ -109,9 +127,14 @@ const columns: ColumnDef<Role, unknown>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {permissions.edit && (
-                            <DropdownMenuItem onClick={() => table.options.meta?.onEdit(item)}>
-                                <Pencil1Icon className="mr-2" /> Edit
-                            </DropdownMenuItem>
+                            <>
+                                <DropdownMenuItem onClick={() => table.options.meta?.onEdit(item)}>
+                                    <Pencil1Icon className="mr-2" /> Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => table.options.meta?.onEdit(item)}>
+                                    <Building2Icon className="mr-2 size-4" /> Access
+                                </DropdownMenuItem>
+                            </>
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -119,5 +142,3 @@ const columns: ColumnDef<Role, unknown>[] = [
         },
     },
 ];
-
-export default columns;

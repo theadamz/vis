@@ -63,17 +63,17 @@ const SignIn = ({ canResetPassword, app, config }: PageProps<{ canResetPassword:
                                 </div>
                                 <div className="grid gap-2">
                                     <div className="flex items-center">
-                                        <Label htmlFor="password">Kata Sandi</Label>
+                                        <Label htmlFor="password">Password</Label>
                                         {canResetPassword ? (
                                             <Link href="/forgot-password" className="ml-auto inline-block text-sm underline">
-                                                Lupa Kata Sandi?
+                                                Forgot Password?
                                             </Link>
                                         ) : null}
                                     </div>
                                     <Input
                                         id="password"
                                         type="password"
-                                        placeholder="Kata Sandi"
+                                        placeholder="Password"
                                         required
                                         onChange={(e) => setData("password", e.target.value)}
                                         value={data.password}
@@ -87,7 +87,7 @@ const SignIn = ({ canResetPassword, app, config }: PageProps<{ canResetPassword:
                                             checked={data.remember}
                                             onCheckedChange={(checked) => setData("remember", checked === "indeterminate" ? false : checked)}
                                         />
-                                        <Label htmlFor="remember">Ingat Saya</Label>
+                                        <Label htmlFor="remember">Remember Me</Label>
                                     </div>
                                 </div>
                                 <Button type="submit" className="w-full" disabled={processing}>
@@ -96,9 +96,9 @@ const SignIn = ({ canResetPassword, app, config }: PageProps<{ canResetPassword:
                                 </Button>
                             </div>
                             <div className="mt-4 text-center text-sm">
-                                Tidak memiliki akun?{" "}
+                                Don't have account?{" "}
                                 <Link href={route("sign-up")} className="underline">
-                                    Registrasi
+                                    Register
                                 </Link>
                             </div>
                         </div>

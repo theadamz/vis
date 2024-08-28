@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Application\Role;
 use App\Models\Application\Site;
+use Auth;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -118,11 +119,11 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function (User $model) {
-            $model->created_by = auth()->id();
+            $model->created_by = Auth::id();
         });
 
         static::updating(function (User $model) {
-            $model->updated_by = auth()->id();
+            $model->updated_by = Auth::id();
         });
     }
 }

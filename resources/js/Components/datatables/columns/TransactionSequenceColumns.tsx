@@ -1,10 +1,11 @@
 import { Button } from "@/Components/shadcn/ui/button";
 import { Checkbox } from "@/Components/shadcn/ui/checkbox";
 import { TransactionType } from "@/types";
+import { sortHandler } from "@/utils/datatables";
 import { ColumnDef } from "@tanstack/react-table";
 import CaretColumn from "../CaretColumn";
 
-const columns: ColumnDef<TransactionType, unknown>[] = [
+export const TransactionSequenceColumns: ColumnDef<TransactionType, unknown>[] = [
     {
         id: "select",
         meta: {
@@ -39,7 +40,7 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "year",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Tahun
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -53,7 +54,7 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "month",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     Bulan
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -67,7 +68,7 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         accessorKey: "next_no",
         header: ({ column }) => {
             return (
-                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0">
+                <Button type="button" variant="ghost" onClick={() => column.toggleSorting(sortHandler(column.getIsSorted()))} className="p-0">
                     No. Selanjutnya
                     <CaretColumn sort={column.getIsSorted()} />
                 </Button>
@@ -78,5 +79,3 @@ const columns: ColumnDef<TransactionType, unknown>[] = [
         },
     },
 ];
-
-export default columns;

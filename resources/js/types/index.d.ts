@@ -1,4 +1,5 @@
 import { ErrorBag, Errors } from "@inertiajs/core";
+import { CheckType, InspectionType, Stage } from "./enum";
 
 /*** App ***/
 export type Role = {
@@ -45,13 +46,49 @@ export type TransactionType = {
     format_seq: string;
 };
 
+/*** Basic ***/
+export type VehicleType = {
+    id: string | null;
+    name: string;
+    is_visible: boolean;
+};
+
+/*** Inspection ***/
+export type InspectionForm = {
+    id?: string;
+    vehicle_type_id?: string;
+    type: InspectionType;
+    code: string;
+    name: string;
+    use_eta_dest: boolean;
+    use_ata_dest: boolean;
+    is_publish: boolean;
+};
+
+export type InspectionFormCategory = {
+    id?: string;
+    inspection_form_id?: string;
+    stage: Stage;
+    description: string;
+    order: number;
+    is_separate_page: boolean;
+};
+
+export type InspectionFormCheck = {
+    id?: string;
+    inspection_form_category_id: string;
+    description: string;
+    type: CheckType;
+    order: number;
+};
+
+/*** Core ***/
 export type User = {
     name: string;
     email: string;
     def_path: string;
 };
 
-/*** Core ***/
 export type AppInfo = {
     web_name: string;
     web_name_short: string;

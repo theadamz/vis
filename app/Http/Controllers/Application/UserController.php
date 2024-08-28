@@ -37,7 +37,7 @@ class UserController extends Controller
         return Inertia::render('App/User/Index', [
             'sites' => $sites,
             'roles' => $roles,
-            'datatable' => fn () => $this->datatable()
+            'datatable' => fn() => $this->datatable()
         ]);
     }
 
@@ -76,16 +76,16 @@ class UserController extends Controller
         // filter with search
         $data->when(!empty($search), function (Builder $query) use ($search) {
             // query table
-            $queryAll = $query->where('username', 'ilike', "%{$search}%")->orWhere('email', 'ilike', "%{$search}%");
+            $queries = $query->where('username', 'ilike', "%{$search}%")->orWhere('email', 'ilike', "%{$search}%");
 
             // query relations
-            $queryAll = $queryAll->orWhereHas('role', function (Builder $query) use ($search) {
+            $queries = $queries->orWhereHas('role', function (Builder $query) use ($search) {
                 $query->where('name', 'ilike', "%{$search}%");
             })->orWhereHas('site', function (Builder $query) use ($search) {
                 $query->where('name', 'ilike', "%{$search}%");
             });
 
-            return $queryAll;
+            return $queries;
         });
 
         // filter active
@@ -108,7 +108,7 @@ class UserController extends Controller
 
         // send link with query string and only send needed data
         $data = $data->paginate($perPage, page: $page)->withQueryString()
-            ->through(fn ($rec) => [
+            ->through(fn($rec) => [
                 'id' => $rec->id,
                 'username' => $rec->username,
                 'email' => $rec->email,
@@ -136,8 +136,8 @@ class UserController extends Controller
 
         if ($exist) {
             return back()->withErrors([
-                "username" => ["Identitas pengguna / email sudah digunakan."],
-                "email" => ["Identitas pengguna / email sudah digunakan."],
+                "username" => ["Username / email already used."],
+                "email" => ["Username / email already used."],
             ]);
         }
 
@@ -154,7 +154,7 @@ class UserController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_CREATED],
-                'message' => "Pengguna berhasil dibuat.",
+                'message' => "User successfully created.",
             ]);
 
             Route::inertia('app.user.index', 'App/User/Index');
@@ -181,7 +181,7 @@ class UserController extends Controller
         // jika data kosong maka kirim pesan
         if ($data === null) {
             throw new HttpResponseException(response([
-                "message" => "Data tidak ditemukan.",
+                "message" => "Data not found.",
             ], Response::HTTP_NOT_FOUND));
         }
 
@@ -205,8 +205,8 @@ class UserController extends Controller
 
         if ($exist) {
             return back()->withErrors([
-                "username" => ["Identitas pengguna / email sudah digunakan."],
-                "email" => ["Identitas pengguna / email sudah digunakan."],
+                "username" => ["Username / email already used."],
+                "email" => ["Username / email already used."],
             ]);
         }
 
@@ -221,7 +221,7 @@ class UserController extends Controller
         Session::flash('toast', [
             'variant' => 'success',
             'title' => Response::$statusTexts[Response::HTTP_OK],
-            'message' => "Pengguna berhasil diperbaharui.",
+            'message' => "User sucessfully saved.",
         ]);
 
         Route::inertia('app.user.index', 'App/User/Index');
@@ -248,7 +248,7 @@ class UserController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => count($validated['ids']) . " pengguna berhasil dinon-aktifkan.",
+                'message' => count($validated['ids']) . " user(s) successfully disabled.",
             ]);
 
             Route::inertia('app.user.index', 'App/User/Index');

@@ -1,7 +1,7 @@
 import Alert from "@/Components/Alert";
 import AlertDialog, { AlertDialogRef } from "@/Components/AlertDialog";
 import Breadcrumbs from "@/Components/Breadcrumbs";
-import SiteColumns from "@/Components/datatables/columns/SiteColumns";
+import { SiteColumns } from "@/Components/datatables/columns/SiteColumns";
 import DataTablePagination, { DataTableRef } from "@/Components/datatables/DataTablePagination";
 import ErrorDialog, { ErrorDialogRef } from "@/Components/ErrorDialog";
 import { Button } from "@/Components/shadcn/ui/button";
@@ -43,7 +43,7 @@ const Index = ({ datatable }: PageProps<{ datatable: ISiteDataTablePagination }>
     const handleEdit = async (site: Site) => {
         const response = await axiosCustom({ url: route("app.site.read", { id: site.id }) });
         if (![HttpStatusCode.Ok].includes(response.status)) {
-            Toast({ variant: "warning", title: "Peringatan", description: response.data.message });
+            Toast({ variant: "warning", description: response.data.message });
             return;
         }
 
@@ -54,7 +54,7 @@ const Index = ({ datatable }: PageProps<{ datatable: ISiteDataTablePagination }>
 
     const handleDelete = (data: Array<Role>) => {
         // open dialog and set data to state
-        alertDialog.current?.open({ description: `Yakin akan hapus ${data.length} data?` });
+        alertDialog.current?.open({ description: `Are you sure want to delete ${data.length} data?` });
         setCheckedData(data);
     };
 
@@ -80,7 +80,7 @@ const Index = ({ datatable }: PageProps<{ datatable: ISiteDataTablePagination }>
                 if (errors.message) {
                     errorDialog.current?.show({ message: errors.message });
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -109,19 +109,19 @@ const Index = ({ datatable }: PageProps<{ datatable: ISiteDataTablePagination }>
 
     return (
         <>
-            <Head title="Site" />
+            <Head title="Sites" />
             {/* sub header */}
-            <header className="sticky top-16 z-10 w-full flex py-2 px-6 bg-white shadow justify-between h-14">
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
                 <div className="items-center">
                     <div className="font-semibold text-md leading-tight text-gray-800">Site</div>
                     <Separator className="my-1" />
-                    <Breadcrumbs items={[{ label: "Aplikasi" }, { label: "Site" }]} />
+                    <Breadcrumbs items={[{ label: "Application" }, { label: "Sites" }]} />
                 </div>
                 <div className="flex space-x-2">
                     {props.access.permissions.create && (
                         <Button type="button" variant={"success"} onClick={handleFormOpen}>
                             <PlusIcon className="mr-2 h-4 w-4 stroke-white" />
-                            Buat
+                            Add
                         </Button>
                     )}
                 </div>
@@ -152,13 +152,13 @@ const Index = ({ datatable }: PageProps<{ datatable: ISiteDataTablePagination }>
                             onValueChange={(value) => handleFilters("active", value === "true")}
                         >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Filter Aktif" />
+                                <SelectValue placeholder="Filter Active" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    <SelectLabel>Filter Aktif</SelectLabel>
-                                    <SelectItem value="true">Ya</SelectItem>
-                                    <SelectItem value="false">Tidak</SelectItem>
+                                    <SelectLabel>Filter Active</SelectLabel>
+                                    <SelectItem value="true">Yes</SelectItem>
+                                    <SelectItem value="false">No</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>

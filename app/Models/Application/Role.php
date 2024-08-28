@@ -2,6 +2,7 @@
 
 namespace App\Models\Application;
 
+use Auth;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,11 +42,11 @@ class Role extends Model
         parent::boot();
 
         static::creating(function (Role $model) {
-            $model->created_by = auth()->id();
+            $model->created_by = Auth::id();
         });
 
         static::updating(function (Role $model) {
-            $model->updated_by = auth()->id();
+            $model->updated_by = Auth::id();
         });
     }
 }

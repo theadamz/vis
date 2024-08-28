@@ -124,6 +124,10 @@ const DataTablePagination = <TData, TValue>(
         if (sorting.length > 0) {
             setQuery({ ...query, ...{ page: 1, sort: { field: sorting[0].id, direction: sorting[0].desc ? "desc" : "asc" } } });
         }
+
+        if (sorting.length === 0 && firstPage === false) {
+            setQuery({ ...query, ...{ page: 1, sort: { field: "id", direction: "asc" } } });
+        }
     }, [sorting]);
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import Alert from "@/Components/Alert";
 import AlertDialog, { AlertDialogRef } from "@/Components/AlertDialog";
 import Breadcrumbs from "@/Components/Breadcrumbs";
-import RoleColumns from "@/Components/datatables/columns/RoleColumns";
+import { RoleColumns } from "@/Components/datatables/columns/RoleColumns";
 import DataTablePagination, { DataTableRef } from "@/Components/datatables/DataTablePagination";
 import ErrorDialog, { ErrorDialogRef } from "@/Components/ErrorDialog";
 import { Button } from "@/Components/shadcn/ui/button";
@@ -52,7 +52,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
                     if (errors.message) {
                         errorDialog.current?.show({ message: errors.message });
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", title: "Warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -69,7 +69,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
                     if (errors.message) {
                         errorDialog.current?.show({ message: errors.message });
                     } else {
-                        Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                        Toast({ variant: "warning", title: "Warning", description: refactorErrorMessage(errors) });
                     }
                 },
                 preserveState: true,
@@ -91,7 +91,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
         // request get data
         const response = await axiosCustom({ url: route("app.role.read", { id: role.id }) });
         if (![HttpStatusCode.Ok].includes(response.status)) {
-            Toast({ variant: "warning", title: "Peringatan", description: response.data.message });
+            Toast({ variant: "warning", title: "Warning", description: response.data.message });
             return;
         }
 
@@ -111,7 +111,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
 
     const handleDelete = (data: Array<Role>) => {
         // open dialog and set data to state
-        alertDialog.current?.open({ description: `Yakin akan hapus ${data.length} data?` });
+        alertDialog.current?.open({ description: `Are you sure want to delete ${data.length} data?` });
 
         // set checked data
         setCheckedData(data);
@@ -139,7 +139,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
                 if (errors.message) {
                     errorDialog.current?.show({ message: errors.message });
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", title: "Warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -148,13 +148,13 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
 
     return (
         <>
-            <Head title="Role" />
+            <Head title="Roles" />
             {/* sub header */}
-            <header className="sticky top-16 z-10 w-full flex py-2 px-6 bg-white shadow justify-between h-14">
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
                 <div className="items-center">
-                    <div className="font-semibold text-md leading-tight text-gray-800">Role</div>
+                    <div className="font-semibold text-md leading-tight text-gray-800">Roles</div>
                     <Separator className="my-1" />
-                    <Breadcrumbs items={[{ label: "Aplikasi" }, { label: "Role" }]} />
+                    <Breadcrumbs items={[{ label: "Application" }, { label: "Roles" }]} />
                 </div>
             </header>
 
@@ -178,12 +178,12 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
                         <div className="basis-2/5">
                             <form onSubmit={submitForm}>
                                 <div className="grid gap-2 mb-3">
-                                    <Label htmlFor="name">Nama</Label>
+                                    <Label htmlFor="name">Name</Label>
                                     <Input
                                         id="name"
                                         name="name"
                                         type="text"
-                                        placeholder="Nama"
+                                        placeholder="Name"
                                         maxLength={50}
                                         required
                                         onChange={(e) => setData("name", e.target.value)}
@@ -213,7 +213,7 @@ const RolePage = ({ datatable }: PageProps<{ datatable: IRoleDataTablePagination
                                         </Button>
                                         <Button type="submit" disabled={processing} variant={"outline"}>
                                             {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                                            Simpan
+                                            Save
                                         </Button>
                                     </div>
                                 </div>

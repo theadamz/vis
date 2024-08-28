@@ -80,7 +80,7 @@ const ModifyAccessDialog = ({ onSuccess, onError }: ModifyAccessDialogProps, ref
                 if (errors.message) {
                     onError(errors.message);
                 } else {
-                    Toast({ variant: "warning", title: "Peringatan", description: refactorErrorMessage(errors) });
+                    Toast({ variant: "warning", description: refactorErrorMessage(errors) });
                 }
             },
             preserveState: true,
@@ -100,25 +100,29 @@ const ModifyAccessDialog = ({ onSuccess, onError }: ModifyAccessDialogProps, ref
         <Dialog open={openForm}>
             <DialogContent className="sm:max-w-[640px]" aria-describedby="Form">
                 <DialogHeader>
-                    <DialogTitle>Edit Akses</DialogTitle>
+                    <DialogTitle>Edit Access Permissions</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-2">
-                    <Label htmlFor="access_name">Akses</Label>
-                    <Input id="access_name" name="access_name" type="text" placeholder="Nama Akses" className="border-none p-0" value={accessName} readOnly />
+                    <Label htmlFor="access_name">Access</Label>
+                    <Input id="access_name" name="access_name" type="text" placeholder="Access" className="border-none p-0" value={accessName} readOnly />
                 </div>
                 <div className="grid gap-2">
-                    <Label htmlFor="access_name">Perizinan</Label>
-                    <div className="flex space-x-2">
+                    <Label htmlFor="access_name">Permissions</Label>
+                    <div className="flex space-x-3">
                         {Object.entries(data.permissions).map(([permission, isAllowed]) => (
                             <div key={permission} className="flex items-center">
-                                <Checkbox
-                                    className="ml-2"
-                                    defaultChecked={isAllowed}
-                                    value={permission}
-                                    onCheckedChange={(e) => handleCheckedItem(permission, e.valueOf() as boolean)}
-                                />
-                                <span className="ml-1">{permission}</span>
+                                <div className="flex items-center">
+                                    <Checkbox
+                                        id={permission}
+                                        defaultChecked={isAllowed}
+                                        value={permission}
+                                        onCheckedChange={(e) => handleCheckedItem(permission, e.valueOf() as boolean)}
+                                    />
+                                    <Label htmlFor={permission} className="ml-1">
+                                        {permission}
+                                    </Label>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -134,11 +138,11 @@ const ModifyAccessDialog = ({ onSuccess, onError }: ModifyAccessDialogProps, ref
                 <DialogFooter className="justify-between">
                     <Button type="button" onClick={handleClose}>
                         <Cross2Icon className="mr-2 h-4 w-4" />
-                        Tutup
+                        Close
                     </Button>
                     <Button type="submit" disabled={processing} variant={"outline"} onClick={submitForm}>
                         {processing ? <UpdateIcon className="mr-2 h-4 w-4 animate-spin" /> : <CheckIcon className="mr-2 h-4 w-4" />}
-                        Simpan
+                        Save
                     </Button>
                 </DialogFooter>
             </DialogContent>

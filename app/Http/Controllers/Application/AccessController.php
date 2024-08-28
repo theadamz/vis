@@ -8,7 +8,6 @@ use App\Http\Requests\Application\AccessDuplicateRequest;
 use App\Http\Requests\Application\AccessUpdateRequest;
 use App\Models\Application\Access;
 use App\Models\Application\Role;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -45,7 +44,7 @@ class AccessController extends Controller
         // check if roleId empty
         if (empty($roleId)) {
             throw new HttpResponseException(response([
-                "message" => "Data tidak ditemukan.",
+                "message" => "Data not found.",
             ], Response::HTTP_NOT_FOUND));
         }
 
@@ -54,7 +53,7 @@ class AccessController extends Controller
 
         // if access empty
         if (empty($accesses)) {
-            return response()->json(['message' => 'Tidak ditemukan', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Not found', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
         }
 
         // variables
@@ -156,7 +155,7 @@ class AccessController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_CREATED],
-                'message' => $inserted . " akses berhasil ditambahkan.",
+                'message' => $inserted . " access successfully created.",
             ]);
 
             Route::inertia('app.access.index', 'App/Access/Index');
@@ -178,7 +177,7 @@ class AccessController extends Controller
         // check if $roleId or $accessCode empty
         if (empty($roleId) || empty($accessCode)) {
             throw new HttpResponseException(response([
-                "message" => "Data tidak ditemukan.",
+                "message" => "Data not found.",
             ], Response::HTTP_NOT_FOUND));
         }
 
@@ -187,7 +186,7 @@ class AccessController extends Controller
 
         // if access empty
         if (empty($accesses)) {
-            return response()->json(['message' => 'Tidak ditemukan', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Not found', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
         }
 
         // get access data from config
@@ -263,7 +262,6 @@ class AccessController extends Controller
                 }
             }
 
-
             // commit changes
             DB::commit();
 
@@ -271,7 +269,7 @@ class AccessController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => "Akses berhasil diperbaharui.",
+                'message' => "Access successfully saved.",
             ]);
 
             Route::inertia('app.access.index', 'App/Access/Index');
@@ -306,7 +304,7 @@ class AccessController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_OK],
-                'message' => count($validated['ids']) . " akses berhasil dihapus.",
+                'message' => count($validated['ids']) . " access(es) successfully deleted.",
             ]);
 
             Route::inertia('app.access.index', 'App/Access/Index');
@@ -325,7 +323,7 @@ class AccessController extends Controller
         // Jika role sama
         if ($validated['from_role'] === $validated['to_role']) {
             return back()->withErrors([
-                "message" => "Role tidak bisa sama.",
+                "message" => "Please select different role.",
             ]);
         }
 
@@ -369,7 +367,7 @@ class AccessController extends Controller
             Session::flash('toast', [
                 'variant' => 'success',
                 'title' => Response::$statusTexts[Response::HTTP_CREATED],
-                'message' => "Duplikat akses berhasil.",
+                'message' => "Duplicate success.",
             ]);
 
             Route::inertia('app.access.index', 'App/Access/Index');
@@ -417,13 +415,16 @@ class AccessController extends Controller
 
             // if menuData empty then 403
             if (empty($menuData)) {
-                return response(['message' => 'Tidak ditemukan.'], Response::HTTP_NOT_FOUND)->json();
+                return response(['message' => 'Not found.'], Response::HTTP_NOT_FOUND)->json();
             }
+
+            // set $menuData
+            $menuData = $data;
 
             // save cache with key role_id and save menuData for (2 jam)
             Cache::put(session('role_id'), $menuData, (60 * 60 * 2));
         }
 
-        return response()->json(['data' => $data, 'message' => 'OK'])->setStatusCode(Response::HTTP_OK);
+        return response()->json(['data' => $menuData, 'message' => 'OK'])->setStatusCode(Response::HTTP_OK);
     }
 }

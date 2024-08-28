@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Application;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RoleCreateRequest extends FormRequest
@@ -11,7 +12,7 @@ class RoleCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return Auth::check();
     }
 
     /**

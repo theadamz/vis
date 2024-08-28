@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/Components/Breadcrumbs";
 import ComboBox from "@/Components/ComboBox";
-import TransactionSequenceColumns from "@/Components/datatables/columns/TransactionSequenceColumns";
+import { TransactionSequenceColumns } from "@/Components/datatables/columns/TransactionSequenceColumns";
 import DataTablePagination, { DataTableRef } from "@/Components/datatables/DataTablePagination";
 import Select from "@/Components/Select";
 import { Button } from "@/Components/shadcn/ui/button";
@@ -46,7 +46,7 @@ const Index = ({
         <>
             <Head title="Nomor Urutan" />
             {/* sub header */}
-            <header className="sticky top-16 z-10 w-full flex py-2 px-6 bg-white shadow justify-between h-14">
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
                 <div className="items-center">
                     <div className="font-semibold text-md leading-tight text-gray-800">Nomor Urutan</div>
                     <Separator className="my-1" />

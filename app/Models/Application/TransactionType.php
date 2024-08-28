@@ -2,6 +2,7 @@
 
 namespace App\Models\Application;
 
+use Auth;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,11 +50,11 @@ class TransactionType extends Model
         parent::boot();
 
         static::creating(function (TransactionType $model) {
-            $model->created_by = auth()->id();
+            $model->created_by = Auth::id();
         });
 
         static::updating(function (TransactionType $model) {
-            $model->updated_by = auth()->id();
+            $model->updated_by = Auth::id();
         });
     }
 }
