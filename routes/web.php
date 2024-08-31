@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect('sign-in'))->name('/');
@@ -9,9 +8,9 @@ Route::get('/accesses/menus', [\App\Http\Controllers\Application\AccessControlle
 Route::get('/accesses/check', [\App\Http\Controllers\Application\AccessController::class, 'check'])->name('accesses.auth.check');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/change-site', [\App\Http\Controllers\ProfileController::class, 'updateSite'])->name('profile.update.site');
 });
 
 // app - Application
@@ -91,6 +90,25 @@ Route::prefix('inspections')->middleware(['auth'])->group(function () {
         Route::get('/forms/{id}/edit', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'edit'])->can('ins-form-edit')->name('ins.form.edit');
         Route::put('/forms/{id}', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'update'])->can('ins-form-edit')->name('ins.form.update');
         Route::delete('/forms', [\App\Http\Controllers\Inspection\InspectionFormController::class, 'destroy'])->can('ins-form-delete')->name('ins.form.destroy');
+    });
+
+    // vehicle inspection
+    Route::middleware(['can:ins-inspection', 'access:ins-inspection'])->group(function () {
+        Route::get('/', [\App\Http\Controllers\Inspection\InspectionController::class, 'index'])->name('ins.inspection.index');
+        Route::get('/create', [\App\Http\Controllers\Inspection\InspectionController::class, 'create'])->can('ins-inspection-create')->name('ins.inspection.create');
+        Route::post('/', [\App\Http\Controllers\Inspection\InspectionController::class, 'store'])->can('ins-inspection-create')->name('ins.inspection.store');
+        Route::get('/{id}', [\App\Http\Controllers\Inspection\InspectionController::class, 'show'])->can('ins-inspection-read')->name('ins.inspection.read');
+        Route::get('/{id}/edit', [\App\Http\Controllers\Inspection\InspectionController::class, 'edit'])->can('ins-inspection-edit')->name('ins.inspection.edit');
+        Route::put('/{id}', [\App\Http\Controllers\Inspection\InspectionController::class, 'update'])->can('ins-inspection-edit')->name('ins.inspection.update');
+        Route::delete('/', [\App\Http\Controllers\Inspection\InspectionController::class, 'destroy'])->can('ins-inspection-delete')->name('ins.inspection.destroy');
+    });
+});
+
+// rpt - Reports
+Route::prefix('reports')->middleware(['auth'])->group(function () {
+    // formulir
+    Route::middleware(['can:rpt-list', 'access:rpt-list'])->group(function () {
+        Route::get('/', [\App\Http\Controllers\Reports\ReportController::class, 'index'])->name('rpt.list.index');
     });
 });
 

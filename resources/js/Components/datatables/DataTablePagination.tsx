@@ -238,7 +238,7 @@ const DataTablePagination = <TData, TValue>(
                                     <MixerHorizontalIcon className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuContent align="end" className="w-auto">
                                 <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 {table

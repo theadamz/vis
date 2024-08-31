@@ -13,7 +13,7 @@ import { Separator } from "@/Components/shadcn/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/shadcn/ui/table";
 import Toast from "@/Components/Toast";
 import { InspectionForm, InspectionFormCategory, InspectionFormCheck, PageProps, VehicleType } from "@/types";
-import { getStage, InspectionType, UUID } from "@/types/enum";
+import { getStage, InspectionType } from "@/types/enum";
 import { refactorErrorMessage } from "@/utils/refactorMessages";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { CheckIcon, Cross1Icon, HamburgerMenuIcon, Pencil1Icon, PlusIcon, UpdateIcon } from "@radix-ui/react-icons";
@@ -88,8 +88,8 @@ const Edit = ({ vehicleTypes, inspectionData }: PageProps<{ vehicleTypes: Vehicl
 
         // push new data
         checklists.push({
-            id: category.id ?? UUID.BLANK,
-            inspection_form_id: UUID.BLANK,
+            id: category.id ?? window.crypto.randomUUID(),
+            inspection_form_id: window.crypto.randomUUID(),
             stage: category.stage,
             description: category.description,
             order: category.order,
@@ -180,7 +180,7 @@ const Edit = ({ vehicleTypes, inspectionData }: PageProps<{ vehicleTypes: Vehicl
 
         // push new data
         newChecks.push({
-            id: check.id ?? UUID.BLANK,
+            id: check.id ?? window.crypto.randomUUID(),
             inspection_form_category_id: check.inspection_form_category_id,
             description: check.description,
             type: check.type,

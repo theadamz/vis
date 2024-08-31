@@ -1,6 +1,8 @@
 /*** Enums ***/
-export enum UUID {
-    BLANK = "00000000-0000-0000-0000-000000000000",
+export enum DateDefault {
+    DATE = "yyyy-MM-dd",
+    TIME = "HH:mm:ss",
+    DATE_TIME = "yyyy-MM-dd HH:mm:ss",
 }
 
 export enum InspectionType {

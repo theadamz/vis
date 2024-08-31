@@ -1,68 +1,35 @@
-import { PageProps } from "@/types";
+import { PageProps, Site } from "@/types";
 import { Head } from "@inertiajs/react";
-import DeleteUserForm from "./Partials/DeleteUserForm";
+import ChangeSiteForm from "./Partials/ChangeSiteForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 
-// export default function Edit({ auth, mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean, status?: string }>) {
-//     return (
-//         <AuthenticatedLayout
-//             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>}
-//         >
-//             <Head title="Profile" />
-
-//             <div className="py-12">
-//                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-//                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-//                         <UpdateProfileInformationForm
-//                             mustVerifyEmail={mustVerifyEmail}
-//                             status={status}
-//                             className="max-w-xl"
-//                         />
-//                     </div>
-
-//                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-//                         <UpdatePasswordForm className="max-w-xl" />
-//                     </div>
-
-//                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-//                         <DeleteUserForm className="max-w-xl" />
-//                     </div>
-//                 </div>
-//             </div>
-//         </AuthenticatedLayout>
-//     );
-// }
-
-const Edit = ({ auth, mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) => {
+const Edit = ({ mustVerifyEmail, status, sites }: PageProps<{ mustVerifyEmail: boolean; status?: string; sites: Site[] }>) => {
     return (
         <>
             <Head title="Profile" />
-            <header className="sticky top-16 flex w-full py-2 px-6 bg-white shadow">
-                <div className="font-semibold text-md leading-tight text-gray-500">Dashboard</div>
+            {/* sub header */}
+            <header className="sticky top-16 z-10 w-full flex items-center px-6 bg-white shadow justify-between h-14">
+                <div className="items-center">
+                    <div className="font-semibold text-md leading-tight text-gray-800">Profile</div>
+                </div>
             </header>
 
-            <div className="p-4">
-                <div className="max-w-7xl mx-auto space-y-6">
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdateProfileInformationForm mustVerifyEmail={mustVerifyEmail} status={status} className="max-w-xl" />
-                    </div>
+            <div className="p-4 mx-auto space-y-6 w-full">
+                <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <ChangeSiteForm className="w-full" sites={sites} />
+                </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <UpdateProfileInformationForm mustVerifyEmail={mustVerifyEmail} status={status} className="w-full" />
+                </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
+                <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <UpdatePasswordForm className="w-full" />
                 </div>
             </div>
         </>
     );
 };
-
-// Edit.header = <h2 className="font-semibold text-xl text-gray-800 leading-tight">Profil</h2>;
-
-// Edit.layout = (page: ReactNode) => <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>}>{page}</AuthenticatedLayout>;
 
 export default Edit;

@@ -1,12 +1,12 @@
 import MainMenu from "@/Components/MainMenu";
 import { Button } from "@/Components/shadcn/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/shadcn/ui/dropdown-menu";
-import { Input } from "@/Components/shadcn/ui/input";
 import { Toaster } from "@/Components/shadcn/ui/sonner";
 import { Group, Menu, PageProps } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
+import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
 import axios from "axios";
-import { CircleUser, Search } from "lucide-react";
+import { CircleUser } from "lucide-react";
 import { DateTime } from "luxon";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 
@@ -42,44 +42,40 @@ export default function Authenticated({ children }: Readonly<PropsWithChildren>)
         <div className="flex min-h-screen w-full flex-col">
             {/* Navbar */}
             <nav className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-                {/* Main navigation */}
-                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-                    <Link href={route("/")} className="flex flex-shrink-0">
-                        <img src={props.config.url + "/assets/images/logo.png"} className="h-8 w-auto" alt={props.app.web_name} />
-                    </Link>
-                    <MainMenu groups={groups} menus={menus} />
-                </nav>
+                <div className="w-full flex justify-between">
+                    {/* Main navigation */}
+                    <nav className="flex gap-6 text-lg font-medium items-center">
+                        <Link href={route("/")} className="flex flex-shrink-0">
+                            <img src={props.config.url + "/assets/images/logo.png"} className="h-8 w-auto" alt={props.app.web_name} />
+                        </Link>
+                        <MainMenu groups={groups} menus={menus} />
+                    </nav>
 
-                {/* Account drop down */}
-                <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-                    <form className="ml-auto flex-1 sm:flex-initial">
-                        <div className="relative">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                            <Input type="search" placeholder="Pencarian..." className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]" />
-                        </div>
-                    </form>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
-                                <CircleUser className="h-5 w-5" />
-                                <span className="sr-only">Toggle user menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <Link href={route("profile.edit")}>
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                            </Link>
-                            <Link href={route("profile.edit")}>
-                                <DropdownMenuItem>Change Site</DropdownMenuItem>
-                            </Link>
-                            <DropdownMenuSeparator />
-                            <Link href={route("sign-out")} method="post" as="button" className="w-full">
-                                <DropdownMenuItem>Sign Out</DropdownMenuItem>
-                            </Link>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {/* Account drop down */}
+                    <div className="flex items-center gap-4">
+                        <Button variant="secondary" size="icon" className="rounded-full">
+                            <OpenInNewWindowIcon className="h-5 w-5" />
+                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="secondary" size="icon" className="rounded-full">
+                                    <CircleUser className="h-5 w-5" />
+                                    <span className="sr-only">Toggle user menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <Link href={route("profile.edit")}>
+                                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                                </Link>
+                                <DropdownMenuSeparator />
+                                <Link href={route("sign-out")} method="post" as="button" className="w-full">
+                                    <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                                </Link>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </div>
             </nav>
 

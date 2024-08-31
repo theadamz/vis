@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use Carbon\CarbonImmutable;
 use DateTimeZone;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Intervention\Image\ImageManager;
 
@@ -71,5 +73,12 @@ class GeneralHelper
         } catch (\Exception $e) {
             return null;
         }
+    }
+
+    public static function isValidDate(string $dateString, string $format = 'Y-m-d'): bool
+    {
+        $dateTime = CarbonImmutable::createFromFormat($format, $dateString);
+
+        return $dateTime && $dateTime->format($format) === $dateString;
     }
 }

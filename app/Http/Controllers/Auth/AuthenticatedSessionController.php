@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // get role
-        $role = Role::where('id', auth()->user()->role_id)->first();
+        $role = Role::where('id', Auth::user()->role_id)->first();
 
         // save store
         $sessionStore = [
@@ -73,12 +73,12 @@ class AuthenticatedSessionController extends Controller
             'browser' => $browser,
             'country' => $country,
             'city' => $city,
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now()
         ]);
 
         // update last login
-        $user = User::find(auth()->user()->id);
+        $user = User::find(Auth::user()->id);
         $user->last_login_at = now();
         $user->save();
     }

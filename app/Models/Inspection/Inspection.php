@@ -22,6 +22,11 @@ class Inspection extends Model
         return $this->belongsTo(InspectionForm::class);
     }
 
+    public function inspected_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "inspected_by", "id");
+    }
+
     public function checked_in_user(): BelongsTo
     {
         return $this->belongsTo(User::class, "checked_in_by", "id");

@@ -1,6 +1,6 @@
 import { RankingInfo } from "@tanstack/match-sorter-utils";
 import { FilterFn, RowData } from "@tanstack/react-table";
-import { InspectionForm, Role, Site, TransactionType, UserDataTable, VehicleType } from ".";
+import { Inspection, InspectionForm, Role, Site, TransactionType, UserDataTable, VehicleType } from ".";
 
 declare module "@tanstack/react-table" {
     interface TableMeta<TData extends RowData> {
@@ -70,4 +70,8 @@ export interface IVehicleTypeDataTablePagination extends Omit<IDataTablePaginati
 /*** Inspection ***/
 export interface IInspectionFormDataTablePagination extends Omit<IDataTablePagination<InspectionForm>, "data"> {
     data: InspectionForm[];
+}
+
+export interface IInspectionDataTablePagination extends Omit<IDataTablePagination<InspectionForm>, "data"> {
+    data: Inspection[];
 }

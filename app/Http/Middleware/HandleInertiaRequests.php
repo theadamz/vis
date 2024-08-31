@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -44,15 +45,16 @@ class HandleInertiaRequests extends Middleware
                 'datetime_format' => config('setting.local.js_date_format'),
             ],
             'auth' => [
-                'user' => auth()->check() ? [
+                'user' => Auth::check() ? [
+                    'username' => $request->user()->username,
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
                     'def_path' => session('def_path')
                 ] : null,
             ],
             'flash' => [
-                'alert' => fn () => $request->session()->get('alert'),
-                'toast' => fn () => $request->session()->get('toast'),
+                'alert' => fn() => $request->session()->get('alert'),
+                'toast' => fn() => $request->session()->get('toast'),
             ]
         ];
     }

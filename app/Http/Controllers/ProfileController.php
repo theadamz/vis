@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Application\Site;
+use App\Models\Application\UserSite;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
+use Validator;
 
 class ProfileController extends Controller
 {
@@ -18,9 +22,16 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        // get user sites
+        $userSitesIds = UserSite::where('user_id', Auth::id())->where('is_allowed', true)->pluck('site_id');
+
+        // get sites
+        $sites = Site::whereIn('id', $userSitesIds)->where('is_active', true)->get(['id', 'code', 'name']);
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'sites' => $sites,
         ]);
     }
 
@@ -40,24 +51,26 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function updateSite(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+        $validated = Validator::make($request->post(), [
+            'site' => ['required', 'uuid', Rule::exists('sites', 'id')]
+        ])->validated();
 
-        $user = $request->user();
+        $data = [
+            'site_id' => $validated['site'],
+        ];
 
-        Auth::logout();
+        try {
 
-        $user->delete();
+            $request->user()->fill($data);
+            $request->user()->save();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+            return Redirect::route('profile.edit');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                "message" => $e->getMessage(),
+            ]);
+        }
     }
 }

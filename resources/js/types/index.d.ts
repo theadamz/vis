@@ -82,8 +82,41 @@ export type InspectionFormCheck = {
     order: number;
 };
 
+export type Inspection = {
+    id?: string;
+    inspection_form_id: string;
+    doc_no: string;
+    doc_date: Date;
+    container_no: string;
+    seal_no: string;
+    inspected_by: string;
+    driver_name: string;
+    driver_id_no: string;
+    driver_pic: string;
+    driver_phone_no: string;
+    vehicle_reg_no: string;
+    vehicle_paper_no: string;
+    vehicle_paper_pic: string;
+    checked_in_by: string;
+    checked_in_at: Date;
+    loading_start_by: string;
+    loading_start_at: Date;
+    loading_end_by: string;
+    loading_end_at: Date;
+    checked_out_by: string;
+    checked_out_at: Date;
+    arrival_time_at_fty: Date;
+    depart_time_from_fty: Date;
+    eta_to_dest: Date;
+    actual_time_arrival_to_dest: Date;
+    export_notified_by: string;
+    remarks: string;
+    stage: Stage;
+};
+
 /*** Core ***/
 export type User = {
+    username: string;
     name: string;
     email: string;
     def_path: string;
