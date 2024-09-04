@@ -37,7 +37,7 @@ return [
     'lists' => [
         /* access khusus */
         ['code' => 'as-approval', 'name' => 'Akses Approval Inspection', 'permissions' => ['approve']],
-        ['code' => 'as-operator', 'name' => 'Akses Inspection App (PWA)', 'permissions' => ['read']],
+        ['code' => 'as-inspector', 'name' => 'Akses Inspection App (PWA)', 'permissions' => ['read']],
 
         /* Menu access */
 

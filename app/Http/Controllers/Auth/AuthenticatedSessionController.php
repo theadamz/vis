@@ -68,9 +68,9 @@ class AuthenticatedSessionController extends Controller
             PersonalAccessToken::where('tokenable_id', $request->user()->id)->delete();
 
             // check if user has access to api with gate
-            if (!Gate::allows('as-operator-read')) {
+            if (!Gate::allows('as-inspector')) {
                 return response()->json([
-                    'message' => "You don't have access as operator.",
+                    'message' => "You don't have access as inspector.",
                 ])->setStatusCode(Response::HTTP_UNAUTHORIZED);
             }
 

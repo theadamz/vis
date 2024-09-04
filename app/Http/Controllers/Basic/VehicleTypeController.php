@@ -7,6 +7,7 @@ use App\Http\Requests\Basic\VehicleTypeCreateRequest;
 use App\Http\Requests\Basic\VehicleTypeUpdateRequest;
 use App\Models\Basic\VehicleType;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Session;
@@ -177,5 +178,13 @@ class VehicleTypeController extends Controller
                 "message" => $e->getMessage(),
             ]);
         }
+    }
+
+    public function lists(): JsonResponse
+    {
+        // get data
+        $data = VehicleType::where('is_visible', true)->get(['id', 'name']);
+
+        return response()->json(['message' => 'Ok', 'data' => $data])->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Inspection\InspectionFormCheck;
 use DB;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
@@ -417,5 +418,17 @@ class InspectionFormController extends Controller
                 "message" => $e->getMessage(),
             ]);
         }
+    }
+
+    public function lists(): JsonResponse
+    {
+        // get data
+        $data = InspectionForm::where('is_publish', true)
+            ->with(['vehicle_type' => function (Builder $query) {
+                $query->select(['id', 'name']);
+            }])
+            ->get(['id', 'vehicle_type_id', 'code', 'name', 'use_eta_dest', 'use_ata_dest']);
+
+        return response()->json(['message' => 'Ok', 'data' => $data])->setStatusCode(Response::HTTP_OK);
     }
 }
