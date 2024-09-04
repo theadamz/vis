@@ -92,7 +92,7 @@ const SignIn = ({ canResetPassword, app, config }: PageProps<{ canResetPassword:
                                 </div>
                                 <Button type="submit" className="w-full" disabled={processing}>
                                     {processing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                    Masuk
+                                    Sign In
                                 </Button>
                             </div>
                             <div className="mt-4 text-center text-sm">

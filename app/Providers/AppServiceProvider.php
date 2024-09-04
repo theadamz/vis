@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Helpers\GeneralHelper;
+use App\Models\Sanctum\PersonalAccessToken;
 use App\Services\AccessService;
+use Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,15 +44,24 @@ class AppServiceProvider extends ServiceProvider
             // loop $menuPermissions
             foreach ($menuPermission['permissions'] as $permission) {
                 Gate::define($menuPermission['code'], function () use ($menuPermission) {
+                    if (!Auth::check()) {
+                        return false;
+                    }
 
-                    return app()->access->hasAccess(session('role_id'), $menuPermission['code']);
+                    return app()->access->hasAccess(Auth::user()->role_id, $menuPermission['code']);
                 });
 
                 Gate::define($menuPermission['code'] . '-' . $permission, function () use ($menuPermission, $permission) {
+                    if (!Auth::check()) {
+                        return false;
+                    }
 
-                    return app()->access->isAllowed(session('role_id'), $menuPermission['code'], $permission);
+                    return app()->access->isAllowed(Auth::user()->role_id, $menuPermission['code'], $permission);
                 });
             }
         }
+
+        // sanctum
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }
 }

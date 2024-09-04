@@ -3,8 +3,8 @@
 VIS (Vehicle Information System), web application to inspect incoming vehicle. This system devided with 3 part :
 
 1. Backend for PWA and SPA.
-2. Web Admin SPA (Use React JS and inertia JS as front end)
-3. Inspection App PWA (Use React JS)
+2. Web Admin SPA (Use React JS and inertia JS as front end).
+3. Inspection App PWA (Use React JS) ([here](https://github.com/theadamz/vis-pwa)).
 4. Database diagram [here](https://dbdiagram.io/d/vis-6694a18b9939893daee91844).
 
 ## Requirements
@@ -94,7 +94,7 @@ VIS (Vehicle Information System), web application to inspect incoming vehicle. T
 -   Add shadcn components :
 
     ```
-    pnpm dlx shadcn-ui@latest add button
+    pnpm dlx shadcn@latest add button
     ```
 
 -   Install debug bar for development :

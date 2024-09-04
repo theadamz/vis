@@ -32,7 +32,7 @@ export default function ChangeSiteForm({ className = "", sites }: Readonly<{ cla
                     <div className="grid col-span-4 gap-2">
                         <ComboBox
                             className="w-96"
-                            placeholder="Filter Site"
+                            placeholder="Select Site"
                             defValue={data.site}
                             items={sites.map((site) => {
                                 return { value: site.id!, label: site.name };
